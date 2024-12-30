@@ -1,10 +1,11 @@
-name: WINDOWS 2022 RDP
+name: WINDOWS 2019 RDP
+
 on:
   workflow_dispatch
   
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-2019
     timeout-minutes: 9999
     steps:
       - name: Download Ngrok.
@@ -31,8 +32,8 @@ jobs:
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
           copy wallpaper.bat D:\a\wallpaper.bat
       - name: Tunnel.
-        run: Start-Process Powershell -ArgumentList '-Noexit -Command "/ngrok/ngrok.exe tcp --region ap 3389"'
+        run: Start-Process Powershell -ArgumentList '-Noexit -Command "./ngrok/ngrok.exe tcp --region ap 3389"'
       - name: Connect Rdp.
         run: cmd /c start.bat
       - name: win10 RDP.
-        run: cmd /c loop.bat
+        run: ./loop.ps1
